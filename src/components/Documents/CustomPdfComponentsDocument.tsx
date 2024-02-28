@@ -16,6 +16,7 @@ export const CustomPdfComponentsDocument = () => (
       <Checkbox isChecked={false} label="test checkbox2" />
       <InputField label="test label" value="test value" />
       <Row type="split"></Row>
+      <Row type="split-left"></Row>
     </Page>
   </Document>
 );

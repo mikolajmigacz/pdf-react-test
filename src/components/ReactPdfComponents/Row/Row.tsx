@@ -4,6 +4,7 @@ import { RowTypeList } from "./Row.types";
 import { CustomInput } from "../../AntDesignComponents/CustomInput";
 import { Table } from "../Table/Table";
 import { Checkbox } from "../Checkbox";
+import { RadioGroup, dataRadioGroup } from "../RadioGroup";
 
 const marginsStyle: {
   marginVertical: number;
@@ -44,7 +45,10 @@ const generateRows = (type: RowTypeList) => {
             <Text>Split Left Row Left</Text>
           </View>
           <View style={{ width: "75%", ...styles.column }}>
-            <Text>Split Left Row Right</Text>
+            <RadioGroup
+              options={dataRadioGroup.options}
+              selectedValue={dataRadioGroup.selectedValue}
+            />
           </View>
         </>
       );
