@@ -5,6 +5,7 @@ import { CustomInput } from "../../AntDesignComponents/CustomInput";
 import { Table } from "../Table/Table";
 import { Checkbox } from "../Checkbox";
 import { RadioGroup, dataRadioGroup } from "../RadioGroup";
+import { LinearGauge } from "../LinearGauge";
 
 const marginsStyle: {
   marginVertical: number;
@@ -42,13 +43,14 @@ const generateRows = (type: RowTypeList) => {
       return (
         <>
           <View style={{ width: "25%", ...styles.column }}>
-            <Text>Split Left Row Left</Text>
+            <LinearGauge currentValue={150} maxValue={300} minValue={0} />
           </View>
           <View style={{ width: "75%", ...styles.column }}>
             <RadioGroup
               options={dataRadioGroup.options}
               selectedValue={dataRadioGroup.selectedValue}
             />
+            <LinearGauge currentValue={150} maxValue={300} minValue={0} />
           </View>
         </>
       );
