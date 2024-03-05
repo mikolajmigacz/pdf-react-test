@@ -30,15 +30,11 @@ export const CustomPdfComponentsDocument = () => {
       >
         <CostControl
           estimatedCost="30000"
-          realCost="24150.90"
-          sparePartsCost="23900.00"
-          additionalCost="220.90"
+          costs={[
+            { name: "Spare parts", cost: "2500", color: "#8A2BE2" },
+            { name: "Additional", cost: "200", color: "#FF69B4" },
+          ]}
           additionalCostComment="Some comment about the additional cost."
-          colors={{
-            estimatedCost: "#DDD",
-            sparePartsCost: "#8A2BE2",
-            additionalCost: "#FF69B4",
-          }}
         />
 
         <ChoiceSelector />

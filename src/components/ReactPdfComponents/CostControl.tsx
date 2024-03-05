@@ -6,6 +6,19 @@ const calculateWidth = (cost: string, estimatedCost: string): string => {
   return `${Math.min(100, ratio * 100)}%`;
 };
 
+const calculateLeftOffset = (
+  costs: Array<{ name: string; cost: string; color: string }>,
+  estimatedCost: string,
+  index: number
+) => {
+  let offset = 0;
+  for (let i = 0; i < index; i++) {
+    const ratio = parseFloat(costs[i].cost) / parseFloat(estimatedCost);
+    offset += Math.min(100, ratio * 100);
+  }
+  return `${offset}%`;
+};
+
 const styles = StyleSheet.create({
   section: {
     margin: 10,
@@ -18,6 +31,8 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   costLabel: {
+    flexDirection: "row",
+    alignItems: "center",
     width: "50%",
   },
   costValue: {
@@ -50,21 +65,16 @@ const styles = StyleSheet.create({
 
 const CostControl = ({
   estimatedCost,
-  realCost,
-  sparePartsCost,
-  additionalCost,
+  costs,
   additionalCostComment,
-  colors,
 }: {
   estimatedCost: string;
-  realCost: string;
-  sparePartsCost: string;
-  additionalCost: string;
+  costs: Array<{ name: string; cost: string; color: string }>;
   additionalCostComment: string;
-  colors: { [key: string]: string };
 }) => {
-  const sparePartsBarWidth = calculateWidth(sparePartsCost, estimatedCost);
-  const additionalCostBarWidth = calculateWidth(additionalCost, estimatedCost);
+  const realCost = costs
+    .reduce((sum, { cost }) => sum + parseFloat(cost), 0)
+    .toFixed(2);
 
   return (
     <View style={styles.section}>
@@ -80,7 +90,7 @@ const CostControl = ({
               styles.costBar,
               {
                 width: "100%",
-                backgroundColor: colors.estimatedCost,
+                backgroundColor: "#DDD",
               },
             ]}
           />
@@ -92,75 +102,48 @@ const CostControl = ({
         <Text style={styles.costLabel}>Real cost</Text>
         <Text style={styles.costValue}>{realCost} €</Text>
         <View style={styles.costBarContainer}>
-          {/* Spare Parts Cost Bar */}
-          <View
-            style={[
-              styles.costBar,
-              {
-                width: sparePartsBarWidth,
-                backgroundColor: colors.sparePartsCost,
-              },
-            ]}
-          />
-          {/* Additional Cost Bar */}
-          <View
-            style={[
-              styles.costBar,
-              {
-                left: sparePartsBarWidth,
-                width: additionalCostBarWidth,
-                backgroundColor: colors.additionalCost,
-              },
-            ]}
-          />
+          {costs.map((costItem, index) => (
+            <View
+              key={index}
+              style={[
+                styles.costBar,
+                {
+                  width: calculateWidth(costItem.cost, estimatedCost),
+                  backgroundColor: costItem.color,
+                  left: calculateLeftOffset(costs, estimatedCost, index),
+                },
+              ]}
+            />
+          ))}
         </View>
       </View>
 
-      {/* Spare Parts Cost */}
-      <View style={styles.costItem}>
-        <View
-          style={[
-            styles.colorIndicator,
-            { backgroundColor: colors.sparePartsCost },
-          ]}
-        />
-        <Text style={styles.costLabel}>Spare parts cost</Text>
-        <Text style={styles.costValue}>{sparePartsCost} €</Text>
-        <View style={styles.costBarContainer}>
-          <View
-            style={[
-              styles.costBar,
-              {
-                width: sparePartsBarWidth,
-                backgroundColor: colors.sparePartsCost,
-              },
-            ]}
-          />
+      {/* Dynamically Rendered Cost Items */}
+      {costs.map((costItem, index) => (
+        <View key={index} style={styles.costItem}>
+          <View style={[styles.costLabel, { paddingLeft: "2%" }]}>
+            <View
+              style={[
+                styles.colorIndicator,
+                { backgroundColor: costItem.color },
+              ]}
+            />
+            <Text>{costItem.name}</Text>
+          </View>
+          <Text style={styles.costValue}>{costItem.cost} €</Text>
+          <View style={styles.costBarContainer}>
+            <View
+              style={[
+                styles.costBar,
+                {
+                  width: calculateWidth(costItem.cost, estimatedCost),
+                  backgroundColor: costItem.color,
+                },
+              ]}
+            />
+          </View>
         </View>
-      </View>
-
-      {/* Additional Cost */}
-      <View style={styles.costItem}>
-        <View
-          style={[
-            styles.colorIndicator,
-            { backgroundColor: colors.additionalCost },
-          ]}
-        />
-        <Text style={styles.costLabel}>Additional cost</Text>
-        <Text style={styles.costValue}>{additionalCost} €</Text>
-        <View style={styles.costBarContainer}>
-          <View
-            style={[
-              styles.costBar,
-              {
-                width: additionalCostBarWidth,
-                backgroundColor: colors.additionalCost,
-              },
-            ]}
-          />
-        </View>
-      </View>
+      ))}
 
       {/* Additional Cost Comment */}
       <View style={styles.commentBox}>
