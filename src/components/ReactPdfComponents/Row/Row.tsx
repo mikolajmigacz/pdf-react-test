@@ -1,11 +1,15 @@
 import React from "react";
 import { View, Text, StyleSheet } from "@react-pdf/renderer";
-import { RowTypeList } from "./Row.types";
 import { CustomInput } from "../../AntDesignComponents/CustomInput";
 import { Table } from "../Table/Table";
 import { Checkbox } from "../Checkbox";
 import { RadioGroup, dataRadioGroup } from "../RadioGroup";
 import { LinearGauge } from "../LinearGauge";
+import { RowTypeList } from "../../../utils/types";
+import {
+  EmployeesLoginHistorycolumns,
+  EmployeesLoginHistorydata,
+} from "../Table/Table.data";
 
 const marginsStyle: {
   marginVertical: number;
@@ -24,15 +28,21 @@ const generateRows = (type: RowTypeList) => {
   switch (type) {
     case "normal":
       return (
-        <Text style={{ width: "100%", ...styles.column }}>
-          <Table />
-        </Text>
+        <View style={{ width: "100%", ...styles.column }}>
+          <Table
+            columns={EmployeesLoginHistorycolumns}
+            data={EmployeesLoginHistorydata}
+          />
+        </View>
       );
     case "split":
       return (
         <>
           <View style={{ width: "50%", ...styles.column }}>
-            <Table />
+            <Table
+              columns={EmployeesLoginHistorycolumns}
+              data={EmployeesLoginHistorydata}
+            />
           </View>
           <View style={{ width: "50%", ...styles.column }}>
             <Checkbox isChecked label="label" />
@@ -58,7 +68,10 @@ const generateRows = (type: RowTypeList) => {
       return (
         <>
           <View style={{ width: "75%", ...styles.column }}>
-            <Text>Split Right Row Left</Text>
+            <Table
+              columns={EmployeesLoginHistorycolumns}
+              data={EmployeesLoginHistorydata}
+            />
           </View>
           <View style={{ width: "25%", ...styles.column }}>
             <Text>Split Right Row Right</Text>

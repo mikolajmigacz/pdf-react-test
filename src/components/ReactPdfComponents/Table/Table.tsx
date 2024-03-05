@@ -1,5 +1,4 @@
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
-import { columns, data } from "./Table.data";
+import { Text, View, StyleSheet } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
   table: {
@@ -22,29 +21,37 @@ const styles = StyleSheet.create({
     borderBottomStyle: "solid",
   },
   cell: {
-    flexGrow: 1,
+    flexGrow: 0,
     padding: 5,
-    textAlign: "center",
+    textAlign: "left",
   },
 });
 
-export const Table = () => (
-  <View style={styles.table}>
-    <View style={styles.header}>
-      {columns.map((col: any) => (
-        <Text style={styles.cell} key={col.key}>
-          {col.label}
-        </Text>
-      ))}
-    </View>
-    {data.map((row: any, i: number) => (
-      <View style={styles.row} key={i}>
+export const Table = ({ columns, data }: { columns: any; data: any }) => {
+  return (
+    <View style={styles.table}>
+      <View style={styles.header}>
         {columns.map((col: any) => (
-          <Text style={styles.cell} key={col.key}>
-            {row[col.key]}
+          <Text
+            style={[styles.cell, { flexBasis: `${100 / columns.length}%` }]}
+            key={col.key}
+          >
+            {col.label}
           </Text>
         ))}
       </View>
-    ))}
-  </View>
-);
+      {data.map((row: any, i: number) => (
+        <View style={styles.row} key={i}>
+          {columns.map((col: any) => (
+            <Text
+              style={[styles.cell, { flexBasis: `${100 / columns.length}%` }]}
+              key={col.key}
+            >
+              {row[col.key]}
+            </Text>
+          ))}
+        </View>
+      ))}
+    </View>
+  );
+};

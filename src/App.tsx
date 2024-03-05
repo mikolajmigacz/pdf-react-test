@@ -1,4 +1,3 @@
-// File: App.js
 import React from "react";
 import "./App.css";
 import { PDFViewer, StyleSheet } from "@react-pdf/renderer";
@@ -9,6 +8,7 @@ import { StyledComponentDocument } from "./components/Documents/StyledComponentD
 
 import { CustomInput } from "./components/AntDesignComponents/CustomInput";
 import { printDocument } from "./components/html2canvas-pdfjs";
+import { MainDocument } from "./components/Documents/MainDocument";
 React.useLayoutEffect = React.useEffect;
 const styles = StyleSheet.create({
   PDFViewer: {
@@ -27,6 +27,7 @@ function App() {
         {/* <StyledComponentDocument /> */}
         {/* <MyDocument /> */}
         {/* <HTMLDocument /> */}
+        {/* <MainDocument /> */}
       </PDFViewer>
     </div>
   );

@@ -1,8 +1,8 @@
 import React from "react";
 import { Document, Page } from "@react-pdf/renderer";
 import { Row } from "../ReactPdfComponents/Row/Row";
-import { RowTypeList } from "../ReactPdfComponents/Row/Row.types";
 import { Section } from "../ReactPdfComponents/Section";
+import { RowTypeList } from "../../utils/types";
 
 const rowTypes: RowTypeList[] = [
   "normal",
@@ -16,7 +16,7 @@ const rowTypes: RowTypeList[] = [
 export const MyDocument = () => (
   <Document>
     <Page style={{ padding: "5px" }} size="A4">
-      <Section>
+      {/* <Section>
         {Object.values(rowTypes).map((type) => (
           <Row key={type} type={type} />
         ))}
@@ -29,8 +29,7 @@ export const MyDocument = () => (
         {Object.values(rowTypes).map((type) => (
           <Row key={type} type={type} />
         ))}
-        {/* {text} */}
-      </Section>
+      </Section> */}
     </Page>
   </Document>
 );

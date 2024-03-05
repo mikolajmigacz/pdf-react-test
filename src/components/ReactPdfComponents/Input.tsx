@@ -18,13 +18,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const InputField = ({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) => (
+export const Input = ({ label, value }: { label: string; value: string }) => (
   <View style={styles.inputContainer}>
     <Text style={styles.label}>{label}</Text>
     <View style={styles.input}>
