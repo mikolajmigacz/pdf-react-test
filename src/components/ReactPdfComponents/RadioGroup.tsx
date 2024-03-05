@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
 
-// Create styles
 const styles = StyleSheet.create({
   radioGroup: {
     flexDirection: "row",
@@ -64,7 +63,6 @@ export const RadioGroup = ({
   </View>
 );
 
-// Data structure example
 export const dataRadioGroup = {
   options: ["Hangzhou", "Shanghai", "Beijing", "Chengdu"],
   selectedValue: "Hangzhou",

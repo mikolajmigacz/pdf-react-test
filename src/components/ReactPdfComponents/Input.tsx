@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet } from "@react-pdf/renderer";
 
-// Define styles
 const styles = StyleSheet.create({
   inputContainer: {
     marginBottom: 10,
