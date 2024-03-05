@@ -67,5 +67,5 @@ export type RowTypeList =
 //Periodicity
 //GeneratedWork orders
 //Employee Picker
-//StatusComment
 //Employees Login History
+//ActionsButtons

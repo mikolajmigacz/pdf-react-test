@@ -33,6 +33,7 @@ export const CustomPdfComponentsDocument = () => {
           costs={[
             { name: "Spare parts", cost: "2500", color: "#8A2BE2" },
             { name: "Additional", cost: "200", color: "#FF69B4" },
+            { name: "Clothes", cost: "1000", color: "blue" },
           ]}
           additionalCostComment="Some comment about the additional cost."
         />

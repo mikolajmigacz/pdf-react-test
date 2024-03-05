@@ -1,76 +1,125 @@
 import React from "react";
 import { View, Text, StyleSheet } from "@react-pdf/renderer";
 
-const calculateWidth = (cost: string, estimatedCost: string): string => {
-  const ratio = parseFloat(cost) / parseFloat(estimatedCost);
-  return `${Math.min(100, ratio * 100)}%`;
+// Define types for the cost items and the main component props
+type CostItemType = {
+  name: string;
+  cost: string;
+  color: string;
 };
 
-const calculateLeftOffset = (
-  costs: Array<{ name: string; cost: string; color: string }>,
-  estimatedCost: string,
-  index: number
-) => {
-  let offset = 0;
-  for (let i = 0; i < index; i++) {
-    const ratio = parseFloat(costs[i].cost) / parseFloat(estimatedCost);
-    offset += Math.min(100, ratio * 100);
-  }
-  return `${offset}%`;
+type CostControlProps = {
+  estimatedCost: string;
+  costs: CostItemType[];
+  additionalCostComment: string;
 };
+
+type CostBarProps = {
+  cost: string;
+  total: string;
+  color: string;
+  offset?: string;
+};
+
+const calculatePercentage = (value: string, total: string): string =>
+  `${Math.min(100, (parseFloat(value) / parseFloat(total)) * 100)}%`;
+
+const calculateOffset = (
+  costs: CostItemType[],
+  total: string,
+  index: number
+): string =>
+  `${costs
+    .slice(0, index)
+    .reduce(
+      (acc, costItem) =>
+        acc +
+        Math.min(100, (parseFloat(costItem.cost) / parseFloat(total)) * 100),
+      0
+    )}%`;
 
 const styles = StyleSheet.create({
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-  costItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 2,
-  },
-  costLabel: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: "50%",
-  },
-  costValue: {
-    width: "20%",
-    textAlign: "right",
-  },
+  section: { width: "100%" },
+  costItem: { flexDirection: "row", alignItems: "center", marginBottom: 2 },
+  costLabel: { flexDirection: "row", alignItems: "center", width: "50%" },
+  costValue: { width: "20%", textAlign: "right" },
   costBarContainer: {
     position: "relative",
     width: "30%",
     height: 10,
-    borderRadius: 5,
+    borderRadius: 2,
     marginLeft: 5,
   },
-  costBar: {
-    position: "absolute",
-    height: "100%",
-    borderRadius: 5,
-  },
+  costBar: { position: "absolute", height: "100%", borderRadius: 2 },
   colorIndicator: {
     width: 10,
     height: 10,
     borderRadius: "50%",
     marginRight: 5,
   },
-  commentBox: {
-    marginTop: 5,
-    padding: 5,
-  },
+  commentBox: { marginTop: 5, padding: 5 },
 });
 
-const CostControl = ({
+const CostBar: React.FC<CostBarProps> = ({
+  cost,
+  total,
+  color,
+  offset = 0,
+}) => (
+  <View
+    style={[
+      styles.costBar,
+      {
+        width: calculatePercentage(cost, total),
+        backgroundColor: color,
+        left: offset,
+      },
+    ]}
+  />
+);
+
+type CostItemProps = {
+  label: string;
+  value: string;
+  costs?: CostItemType[];
+  total?: string;
+  barColor?: string;
+};
+
+const CostItem: React.FC<CostItemProps> = ({
+  label,
+  value,
+  costs,
+  total,
+  barColor = "transparent",
+}) => (
+  <View style={styles.costItem}>
+    <Text style={styles.costLabel}>{label}</Text>
+    <Text style={styles.costValue}>{value}</Text>
+    <View style={styles.costBarContainer}>
+      {costs && total ? (
+        costs.map((costItem, index) => (
+          <CostBar
+            key={index}
+            cost={costItem.cost}
+            total={total}
+            color={costItem.color}
+            offset={calculateOffset(costs, total, index)}
+          />
+        ))
+      ) : (
+        <View
+          style={[styles.costBar, { width: "100%", backgroundColor: barColor }]}
+        />
+      )}
+    </View>
+  </View>
+);
+
+const CostControl: React.FC<CostControlProps> = ({
   estimatedCost,
   costs,
   additionalCostComment,
-}: {
-  estimatedCost: string;
-  costs: Array<{ name: string; cost: string; color: string }>;
-  additionalCostComment: string;
 }) => {
   const realCost = costs
     .reduce((sum, { cost }) => sum + parseFloat(cost), 0)
@@ -79,46 +128,17 @@ const CostControl = ({
   return (
     <View style={styles.section}>
       <Text>Cost control:</Text>
-
-      {/* Estimated Cost */}
-      <View style={styles.costItem}>
-        <Text style={styles.costLabel}>Estimated cost</Text>
-        <Text style={styles.costValue}>{estimatedCost} €</Text>
-        <View style={styles.costBarContainer}>
-          <View
-            style={[
-              styles.costBar,
-              {
-                width: "100%",
-                backgroundColor: "#DDD",
-              },
-            ]}
-          />
-        </View>
-      </View>
-
-      {/* Real Cost */}
-      <View style={styles.costItem}>
-        <Text style={styles.costLabel}>Real cost</Text>
-        <Text style={styles.costValue}>{realCost} €</Text>
-        <View style={styles.costBarContainer}>
-          {costs.map((costItem, index) => (
-            <View
-              key={index}
-              style={[
-                styles.costBar,
-                {
-                  width: calculateWidth(costItem.cost, estimatedCost),
-                  backgroundColor: costItem.color,
-                  left: calculateLeftOffset(costs, estimatedCost, index),
-                },
-              ]}
-            />
-          ))}
-        </View>
-      </View>
-
-      {/* Dynamically Rendered Cost Items */}
+      <CostItem
+        label="Estimated cost"
+        value={`${parseFloat(estimatedCost).toFixed(2)} €`}
+        barColor="#DDD"
+      />
+      <CostItem
+        label="Real cost"
+        value={`${realCost} €`}
+        costs={costs}
+        total={estimatedCost}
+      />
       {costs.map((costItem, index) => (
         <View key={index} style={styles.costItem}>
           <View style={[styles.costLabel, { paddingLeft: "2%" }]}>
@@ -130,22 +150,18 @@ const CostControl = ({
             />
             <Text>{costItem.name}</Text>
           </View>
-          <Text style={styles.costValue}>{costItem.cost} €</Text>
+          <Text style={styles.costValue}>
+            {parseFloat(costItem.cost).toFixed(2)} €
+          </Text>
           <View style={styles.costBarContainer}>
-            <View
-              style={[
-                styles.costBar,
-                {
-                  width: calculateWidth(costItem.cost, estimatedCost),
-                  backgroundColor: costItem.color,
-                },
-              ]}
+            <CostBar
+              cost={costItem.cost}
+              total={estimatedCost}
+              color={costItem.color}
             />
           </View>
         </View>
       ))}
-
-      {/* Additional Cost Comment */}
       <View style={styles.commentBox}>
         <Text>Additional cost comment</Text>
         <Text>{additionalCostComment}</Text>
@@ -153,5 +169,4 @@ const CostControl = ({
     </View>
   );
 };
-
 export default CostControl;
