@@ -1,7 +1,8 @@
 import React from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Style } from "@react-pdf/types";
 
-const styles = StyleSheet.create({
+const radioStyles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
@@ -27,19 +28,30 @@ const styles = StyleSheet.create({
   },
 });
 
+function combineStyles(...styles: (Style | undefined)[]): Style {
+  return Object.assign({}, ...styles.filter(Boolean));
+}
+
 export const Radio = ({
   checked,
   label,
+  styles,
 }: {
   checked: boolean;
   label: string;
+  styles?: Style | Style[];
 }) => {
+  const combinedStyles = combineStyles(
+    radioStyles.container,
+    Array.isArray(styles) ? combineStyles(...styles) : styles
+  );
+
   return (
-    <View style={styles.container}>
-      <View style={styles.radioOuter}>
-        {checked ? <View style={styles.radioInner} /> : null}
+    <View style={combinedStyles}>
+      <View style={radioStyles.radioOuter}>
+        {checked ? <View style={radioStyles.radioInner} /> : null}
       </View>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={radioStyles.label}>{label}</Text>
     </View>
   );
 };

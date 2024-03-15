@@ -1,4 +1,5 @@
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
+import { labelFontSize, textFontSize } from "../../../globals.const";
 
 const styles = StyleSheet.create({
   table: {
@@ -27,27 +28,79 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Table = ({ columns, data }: { columns: any; data: any }) => {
+export const Table = ({
+  label,
+  columns,
+  data,
+  showCellNumbers = false,
+  showRowNumbers = true,
+  showHeader = true,
+}: {
+  label: string;
+  columns: any;
+  data: any;
+  showCellNumbers?: boolean;
+  showRowNumbers?: boolean;
+  showHeader?: boolean;
+}) => {
+  const adjustedColumns = showRowNumbers
+    ? [{ key: "rowNumber", label: "#" }, ...columns]
+    : columns;
+  const totalColumns = adjustedColumns.length;
+  const nonRowNumberColumns = totalColumns - (showRowNumbers ? 1 : 0);
+  const flexBasisRowNumber = `${10}%`;
+  const flexBasisOther = `${90 / nonRowNumberColumns}%`;
+
   return (
     <View style={styles.table}>
-      <View style={styles.header}>
-        {columns.map((col: any) => (
-          <Text
-            style={[styles.cell, { flexBasis: `${100 / columns.length}%` }]}
-            key={col.key}
-          >
-            {col.label}
-          </Text>
-        ))}
-      </View>
-      {data.map((row: any, i: number) => (
-        <View style={styles.row} key={i}>
-          {columns.map((col: any) => (
+      <Text style={{ fontSize: labelFontSize }}>{label + ":"}</Text>
+      {showHeader && (
+        <View style={styles.header}>
+          {adjustedColumns.map((col: any) => (
             <Text
-              style={[styles.cell, { flexBasis: `${100 / columns.length}%` }]}
-              key={col.key}
+              style={[
+                styles.cell,
+                {
+                  flexBasis:
+                    col.key === "rowNumber"
+                      ? flexBasisRowNumber
+                      : flexBasisOther,
+                  fontSize: labelFontSize,
+                },
+              ]}
+              key={col.key || "rowNumber"}
             >
-              {row[col.key]}
+              {col.label}
+            </Text>
+          ))}
+        </View>
+      )}
+      {data.map((row: any, rowIndex: number) => (
+        <View style={styles.row} key={rowIndex}>
+          {adjustedColumns.map((col: any, colIndex: number) => (
+            <Text
+              style={[
+                styles.cell,
+                {
+                  flexBasis:
+                    col.key === "rowNumber"
+                      ? flexBasisRowNumber
+                      : flexBasisOther,
+                  fontSize: textFontSize,
+                },
+              ]}
+              key={col.key || rowIndex}
+            >
+              {col.key === "rowNumber"
+                ? rowIndex + 1
+                : `${
+                    showCellNumbers && col.key !== "rowNumber"
+                      ? rowIndex * columns.length +
+                        colIndex +
+                        (showRowNumbers ? 0 : 1) +
+                        ". "
+                      : ""
+                  }${row[col.key]}`}
             </Text>
           ))}
         </View>

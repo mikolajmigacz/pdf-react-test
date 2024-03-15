@@ -4,6 +4,7 @@ export type LayoutElement = {
   id: Id;
   index: number;
   resources?: LayoutElement[];
+  meta?: any;
   type?: RowTypeList | SupportedControlsEnum;
 };
 
@@ -50,7 +51,8 @@ export type SupportedControlsEnum =
   | "EmployeesLoginHistory"
   | "EmployeesLogin"
   | "ActivityPicker"
-  | "ChoiceSelector";
+  | "ChoiceSelector"
+  | "Camera";
 
 export type RowTypeList =
   | "normal" // 1 - 100% width
@@ -59,13 +61,3 @@ export type RowTypeList =
   | "split-right" // 2 - 75% and 25%
   | "three-columns" // 3 - each 33.33%
   | "three-columns-center"; // 3 - 12.5% , 75% and 12.5%
-
-//todo:
-//ChoiceSelector
-//Attachments
-//Cost Control
-//Periodicity
-//GeneratedWork orders
-//Employee Picker
-//Employees Login History
-//ActionsButtons

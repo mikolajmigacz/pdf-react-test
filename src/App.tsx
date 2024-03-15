@@ -23,11 +23,11 @@ function App() {
       <button onClick={printDocument}>Download jspdf PDF</button>
       <PDFViewer style={styles.PDFViewer}>
         {/* uncomment one to see different pdf */}
-        <CustomPdfComponentsDocument />
+        {/* <CustomPdfComponentsDocument /> */}
         {/* <StyledComponentDocument /> */}
         {/* <MyDocument /> */}
         {/* <HTMLDocument /> */}
-        {/* <MainDocument /> */}
+        <MainDocument />
       </PDFViewer>
     </div>
   );

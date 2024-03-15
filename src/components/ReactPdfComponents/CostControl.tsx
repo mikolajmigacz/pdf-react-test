@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "@react-pdf/renderer";
+import { textFontSize } from "../../globals.const";
 
-// Define types for the cost items and the main component props
 type CostItemType = {
   name: string;
   cost: string;
@@ -39,7 +39,7 @@ const calculateOffset = (
     )}%`;
 
 const styles = StyleSheet.create({
-  section: { width: "100%" },
+  section: { width: "100%", fontSize: textFontSize },
   costItem: { flexDirection: "row", alignItems: "center", marginBottom: 2 },
   costLabel: { flexDirection: "row", alignItems: "center", width: "50%" },
   costValue: { width: "20%", textAlign: "right" },
@@ -116,7 +116,7 @@ const CostItem: React.FC<CostItemProps> = ({
   </View>
 );
 
-const CostControl: React.FC<CostControlProps> = ({
+export const CostControl: React.FC<CostControlProps> = ({
   estimatedCost,
   costs,
   additionalCostComment,
@@ -169,4 +169,12 @@ const CostControl: React.FC<CostControlProps> = ({
     </View>
   );
 };
-export default CostControl;
+
+export const MockEstimatedCost = "30000";
+export const MockCosts = [
+  { name: "Spare parts", cost: "2500", color: "#8A2BE2" },
+  { name: "Additional", cost: "200", color: "#FF69B4" },
+  { name: "Clothes", cost: "1000", color: "blue" },
+];
+export const MockAdditionalCostComment =
+  "Some comment about the additional cost.";

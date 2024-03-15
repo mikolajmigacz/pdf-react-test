@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 12,
     marginBottom: 4,
-    fontFamily: "Helvetica",
   },
   radioContainerVertical: {
     flexDirection: "column",
@@ -38,7 +37,7 @@ export const BasicRadioGroup = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label + " :"}</Text>
+      <Text style={styles.label}>{label}</Text>
       <View
         style={
           vertical

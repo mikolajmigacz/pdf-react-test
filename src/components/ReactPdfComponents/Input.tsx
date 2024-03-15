@@ -1,27 +1,44 @@
 import { View, Text, StyleSheet } from "@react-pdf/renderer";
+import { labelFontSize, textFontSize } from "../../globals.const";
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    marginBottom: 10,
+  container: {
+    flexDirection: "column",
+  },
+  containerHorizontal: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   label: {
-    fontSize: 10,
-    marginBottom: 4,
+    fontSize: labelFontSize,
+    marginBottom: 2,
   },
-  input: {
-    fontSize: 10,
-    borderWidth: 1,
-    borderColor: "black",
-    padding: 5,
-    minHeight: 20,
+  labelHorizontal: {
+    marginRight: 5,
+  },
+  value: {
+    fontSize: textFontSize,
   },
 });
 
-export const Input = ({ label, value }: { label: string; value: string }) => (
-  <View style={styles.inputContainer}>
-    <Text style={styles.label}>{label}</Text>
-    <View style={styles.input}>
-      <Text>{value}</Text>
-    </View>
+export const Input = ({
+  label,
+  value,
+  horizontal = false,
+}: {
+  label: string;
+  value: string;
+  horizontal?: boolean;
+}) => (
+  <View style={horizontal ? styles.containerHorizontal : styles.container}>
+    <Text
+      style={[
+        styles.label,
+        horizontal && styles.labelHorizontal ? styles.labelHorizontal : {},
+      ]}
+    >
+      {label + ":"}
+    </Text>
+    <Text style={styles.value}>{value}</Text>
   </View>
 );

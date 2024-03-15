@@ -30,6 +30,7 @@ const generateRows = (type: RowTypeList) => {
       return (
         <View style={{ width: "100%", ...styles.column }}>
           <Table
+            label="test label"
             columns={EmployeesLoginHistorycolumns}
             data={EmployeesLoginHistorydata}
           />
@@ -40,6 +41,7 @@ const generateRows = (type: RowTypeList) => {
         <>
           <View style={{ width: "50%", ...styles.column }}>
             <Table
+              label="test label"
               columns={EmployeesLoginHistorycolumns}
               data={EmployeesLoginHistorydata}
             />
@@ -53,14 +55,28 @@ const generateRows = (type: RowTypeList) => {
       return (
         <>
           <View style={{ width: "25%", ...styles.column }}>
-            <LinearGauge currentValue={150} maxValue={300} minValue={0} />
+            <LinearGauge
+              label="test"
+              unit="pt"
+              currentValue={150}
+              maxValue={300}
+              minValue={0}
+              target={200}
+            />
           </View>
           <View style={{ width: "75%", ...styles.column }}>
             <RadioGroup
               options={dataRadioGroup.options}
               selectedValue={dataRadioGroup.selectedValue}
             />
-            <LinearGauge currentValue={150} maxValue={300} minValue={0} />
+            <LinearGauge
+              target={200}
+              label="test"
+              unit="pt"
+              currentValue={150}
+              maxValue={300}
+              minValue={0}
+            />
           </View>
         </>
       );
@@ -69,6 +85,7 @@ const generateRows = (type: RowTypeList) => {
         <>
           <View style={{ width: "75%", ...styles.column }}>
             <Table
+              label="test label"
               columns={EmployeesLoginHistorycolumns}
               data={EmployeesLoginHistorydata}
             />

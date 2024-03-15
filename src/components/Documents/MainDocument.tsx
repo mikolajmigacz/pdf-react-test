@@ -1,9 +1,14 @@
 import React from "react";
-import { Document, Page, Text } from "@react-pdf/renderer";
+import { Document, Font, Page, Text } from "@react-pdf/renderer";
 import { Section } from "../ReactPdfComponents/Section";
 import { SectionsLayout } from "../ReactPdfComponents/SectionLayout";
 import { LayoutElement } from "../../utils/types";
-import { Layout } from "../../utils/paperless-layout";
+import { paperlesslayout2 } from "../../utils/paperless-data/paperless-layout";
+
+Font.register({
+  family: "Roboto",
+  src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-light-webfont.ttf",
+});
 
 const renderSections = (sections: LayoutElement[]) => {
   return sections.map((value, index) => (
@@ -18,9 +23,9 @@ const renderSections = (sections: LayoutElement[]) => {
 
 export const MainDocument = () => (
   <Document>
-    <Page style={{ padding: "5px" }} size="A4">
+    <Page style={{ padding: "5px", fontFamily: "Roboto" }} size="A4">
       <SectionsLayout isMainLayout={true}>
-        {renderSections(Layout.data as LayoutElement[])}
+        {renderSections(paperlesslayout2.data as LayoutElement[])}
       </SectionsLayout>
     </Page>
   </Document>

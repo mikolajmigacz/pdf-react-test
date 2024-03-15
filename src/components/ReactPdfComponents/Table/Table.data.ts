@@ -42,3 +42,31 @@ export const EmployeesLoginHistorycolumns = [
   { label: "Date to", key: "date_to" },
   { label: "Duration", key: "duration" },
 ];
+
+export const GeneratedWorkOrdersData = [
+  {
+    work_order: "WO001",
+    planned_start_date: "2023-09-01",
+    asset: "Pump A",
+    status: "Scheduled",
+  },
+  {
+    work_order: "WO002",
+    planned_start_date: "2023-09-05",
+    asset: "Valve B",
+    status: "In Progress",
+  },
+  {
+    work_order: "WO003",
+    planned_start_date: "2023-09-10",
+    asset: "Conveyor C",
+    status: "Completed",
+  },
+];
+
+export const GeneratedWorkOrdersColumns = [
+  { label: "Work order", key: "work_order" },
+  { label: "Planned start date", key: "planned_start_date" },
+  { label: "Asset", key: "asset" },
+  { label: "Status", key: "status" },
+];
