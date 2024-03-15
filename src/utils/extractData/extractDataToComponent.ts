@@ -112,3 +112,105 @@ export const prepareLinearGaugeData = (meta: any) => {
     showTresholds,
   };
 };
+
+type InputMetaData = {
+  customValidationError: boolean;
+  globalSignedBy: null;
+  tasks: Array<{
+    id: number;
+    subtasks: Array<{
+      id: number;
+      result: string;
+      comment?: string;
+      optionalCheckboxChecked?: boolean;
+    }>;
+  }>;
+};
+
+type Output = Record<
+  number,
+  { result: string; optionalCheckboxChecked: boolean; comment: string }
+>;
+
+export const transformSelectedEvents = (
+  input: InputMetaData | undefined
+): Output | {} => {
+  if (!input) {
+    return {};
+  }
+  let key = 1;
+  const output: Output = {};
+
+  input.tasks.forEach((task) => {
+    task.subtasks.forEach((subtask) => {
+      output[key++] = {
+        result: subtask.result,
+        optionalCheckboxChecked: subtask.optionalCheckboxChecked ?? false,
+        comment: subtask.comment ?? "",
+      };
+    });
+  });
+
+  return output;
+};
+
+type MetaType = {
+  rows: {
+    canAddRows: boolean;
+    rowsNumber: number;
+    showRowNumber: boolean;
+    showCellNumbers: boolean;
+    highlightRowOnAutofill: boolean;
+  };
+  label: string;
+  columns: Array<{
+    id: string;
+    name: string;
+    label: string;
+    cellType: string;
+  }>;
+  autofill: {
+    url: string;
+    enabled: boolean;
+    polling: boolean;
+    dependencies: Array<any>;
+  };
+  tableMode: string;
+  showHeader: boolean;
+  controlType: string;
+};
+
+export const extractTableData = (meta: MetaType, value: string) => {
+  if (!value) {
+    return {
+      label: meta.label,
+      columns: meta.columns.map((col) => ({
+        key: col.id,
+        label: col.label,
+      })),
+      data: [],
+      showHeader: true,
+      showCellNumbers: false,
+      showRowNumber: false,
+    };
+  }
+  const columns = meta.columns.map((col) => ({
+    key: col.name,
+    label: col.label,
+  }));
+  const data = JSON.parse(value).map((record: any) =>
+    columns.reduce((acc: any, col) => {
+      acc[col.key] = record[col.key].value;
+      return acc;
+    }, {})
+  );
+
+  return {
+    label: meta.label,
+    columns,
+    data,
+    showHeader: meta.showHeader,
+    showCellNumbers: meta.rows.showCellNumbers,
+    showRowNumber: meta.rows.showRowNumber,
+  };
+};

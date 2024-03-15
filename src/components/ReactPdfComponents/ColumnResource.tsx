@@ -6,7 +6,7 @@ import { LinearGauge } from "./LinearGauge";
 import { Image, Text, View } from "@react-pdf/renderer";
 import { ReactPDFMarkdown } from "../../utils/ReactPDFMarkdown";
 import { BasicRadioGroup } from "./BasicRadioGroup";
-import { Checklist, transformSelectedEvents } from "./Checklist";
+import { Checklist } from "./Checklist";
 import { Attachments, dummyData } from "./Attachments";
 import { Inspection } from "./Inspection";
 import { StatusComment, dummyStatusCommentData } from "./StatusComment";
@@ -20,11 +20,12 @@ import {
   ExtractSelectData,
   convertToDatePicker,
   convertToTimePicker,
+  extractTableData,
   prepareLinearGaugeData,
+  transformSelectedEvents,
 } from "../../utils/extractData/extractDataToComponent";
 import { ChoiceSelector } from "./ChoiceSelector";
 import { Label } from "./Label";
-import { extractTableData } from "../../utils/extractData/Table";
 import { labelFontSize } from "../../globals.const";
 import { EmployeePicker, mockData } from "./EmployeePicker";
 import { Camera, cameraMockData } from "./Camera";
