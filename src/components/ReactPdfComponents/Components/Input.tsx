@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "@react-pdf/renderer";
-import { labelFontSize, textFontSize } from "../../globals.const";
+import { labelFontSize, textFontSize } from "../../../globals.const";
 
 const styles = StyleSheet.create({
   container: {

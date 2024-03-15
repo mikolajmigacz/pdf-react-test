@@ -1,48 +1,44 @@
 import React from "react";
 import { Document, Page, Image, Font } from "@react-pdf/renderer";
-import { Table } from "../ReactPdfComponents/Table/Table";
-import { Checkbox } from "../ReactPdfComponents/Checkbox";
-import { Input } from "../ReactPdfComponents/Input";
-import { Row } from "../ReactPdfComponents/Row/Row";
-import { Radio } from "../ReactPdfComponents/Radio";
-import {
-  BasicRadioGroup,
-  basicRadioButtonsDataMock,
-} from "../ReactPdfComponents/BasicRadioGroup";
-import { Attachments, dummyData } from "../ReactPdfComponents/Attachments";
-import {
-  EmployeesLoginHistorycolumns,
-  EmployeesLoginHistorydata,
-  GeneratedWorkOrdersColumns,
-  GeneratedWorkOrdersData,
-} from "../ReactPdfComponents/Table/Table.data";
-import {
-  StatusComment,
-  dummyStatusCommentData,
-} from "../ReactPdfComponents/StatusComment";
-import { ChoiceSelector } from "../ReactPdfComponents/ChoiceSelector";
-import { CostControl } from "../ReactPdfComponents/CostControl";
-import { Periodicity } from "../ReactPdfComponents/Periodicity";
-import { Checklist } from "../ReactPdfComponents/Checklist";
-import { Inspection } from "../ReactPdfComponents/Inspection";
-import { SpareParts, mockInputData } from "../ReactPdfComponents/SpareParts";
-import { TaskList } from "../ReactPdfComponents/TaskList";
+
 import {
   taskList,
   tastList_meta,
 } from "../../utils/componentsConst/tasklist.const";
 import {
   ActionButtons,
-  mockButtonNames,
-  mockLabel,
-} from "../ReactPdfComponents/ActionButtons";
-import { WorkOrderInfo, mockProps } from "../ReactPdfComponents/WorkOrderInfo";
-import {
+  Attachments,
+  BasicRadioGroup,
+  Checkbox,
   CommentsThread,
+  CostControl,
+  EmployeeLogin,
+  EmployeePicker,
+  Input,
+  Periodicity,
+  SpareParts,
+  StatusComment,
+  Table,
+  TaskList,
+  WorkOrderInfo,
+  basicRadioButtonsDataMock,
+  dummyData,
+  dummyStatusCommentData,
+  mockButtonNames,
   mockComments,
-} from "../ReactPdfComponents/CommentsThread";
-import { EmployeePicker, mockData } from "../ReactPdfComponents/EmployeePicker";
-import { EmployeeLogin, mockUsers } from "../ReactPdfComponents/EmployeeLogin";
+  mockData,
+  mockInputData,
+  mockLabel,
+  mockProps,
+  mockUsers,
+} from "../ReactPdfComponents/Components";
+import {
+  EmployeesLoginHistorycolumns,
+  EmployeesLoginHistorydata,
+  GeneratedWorkOrdersColumns,
+  GeneratedWorkOrdersData,
+} from "../ReactPdfComponents/Components/Table/Table.data";
+import { Row } from "../ReactPdfComponents/Row/Row";
 
 Font.register({
   family: "Roboto",

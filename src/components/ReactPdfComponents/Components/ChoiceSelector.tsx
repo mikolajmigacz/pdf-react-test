@@ -1,6 +1,6 @@
 import { View, Text } from "@react-pdf/renderer";
 import { BasicRadioGroup } from "./BasicRadioGroup";
-import { textFontSize } from "../../globals.const";
+import { textFontSize } from "../../../globals.const";
 
 export const ChoiceSelector = ({
   label,

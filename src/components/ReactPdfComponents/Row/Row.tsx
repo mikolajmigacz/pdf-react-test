@@ -1,15 +1,17 @@
 import React from "react";
 import { View, Text, StyleSheet } from "@react-pdf/renderer";
-import { CustomInput } from "../../AntDesignComponents/CustomInput";
-import { Table } from "../Table/Table";
-import { Checkbox } from "../Checkbox";
-import { RadioGroup, dataRadioGroup } from "../RadioGroup";
-import { LinearGauge } from "../LinearGauge";
 import { RowTypeList } from "../../../utils/types";
+import {
+  Checkbox,
+  LinearGauge,
+  RadioGroup,
+  Table,
+  dataRadioGroup,
+} from "../Components";
 import {
   EmployeesLoginHistorycolumns,
   EmployeesLoginHistorydata,
-} from "../Table/Table.data";
+} from "../Components/Table/Table.data";
 
 const marginsStyle: {
   marginVertical: number;

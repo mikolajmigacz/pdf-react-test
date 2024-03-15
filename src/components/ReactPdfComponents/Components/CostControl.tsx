@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "@react-pdf/renderer";
-import { textFontSize } from "../../globals.const";
+import { textFontSize } from "../../../globals.const";
 
 type CostItemType = {
   name: string;

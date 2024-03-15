@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, View, Text } from "@react-pdf/renderer";
 import { LayoutElement } from "../../utils/types";
 import { ColumnResource } from "./ColumnResource";
-import { data } from "./Table/Table.data";
 
 export interface ColumnProps {
   data: LayoutElement[];

@@ -1,16 +1,8 @@
 import React from "react";
 import { LayoutElement } from "../../utils/types";
-import { Input } from "./Input";
-import { Table } from "./Table/Table";
-import { LinearGauge } from "./LinearGauge";
 import { Image, Text, View } from "@react-pdf/renderer";
 import { ReactPDFMarkdown } from "../../utils/ReactPDFMarkdown";
-import { BasicRadioGroup } from "./BasicRadioGroup";
-import { Checklist } from "./Checklist";
-import { Attachments, dummyData } from "./Attachments";
-import { Inspection } from "./Inspection";
-import { StatusComment, dummyStatusCommentData } from "./StatusComment";
-import { ActionButtons } from "./ActionButtons";
+
 import { processData } from "../../utils/paperless-data/paperless-process";
 import {
   ExtractCheckboxData,
@@ -24,11 +16,26 @@ import {
   prepareLinearGaugeData,
   transformSelectedEvents,
 } from "../../utils/extractData/extractDataToComponent";
-import { ChoiceSelector } from "./ChoiceSelector";
-import { Label } from "./Label";
+import {
+  ActionButtons,
+  Attachments,
+  BasicRadioGroup,
+  Camera,
+  Checklist,
+  ChoiceSelector,
+  EmployeePicker,
+  Input,
+  Inspection,
+  Label,
+  LinearGauge,
+  StatusComment,
+  Table,
+  cameraMockData,
+  dummyData,
+  dummyStatusCommentData,
+  mockData,
+} from "./Components";
 import { labelFontSize } from "../../globals.const";
-import { EmployeePicker, mockData } from "./EmployeePicker";
-import { Camera, cameraMockData } from "./Camera";
 
 export interface ColumnResourceProps {
   data: LayoutElement;

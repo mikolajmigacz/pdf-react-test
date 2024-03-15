@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "@react-pdf/renderer";
 import { Style } from "@react-pdf/types";
-import { combineStyles, textFontSize } from "../../globals.const";
+import { combineStyles, textFontSize } from "../../../globals.const";
 
 const checkboxStyles = StyleSheet.create({
   checkboxContainer: {

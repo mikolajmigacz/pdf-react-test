@@ -1,10 +1,9 @@
 import React from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
-import { checklistFullInputData as inputData } from "../../utils/componentsConst/checklist.const";
 import { BasicRadioGroup } from "./BasicRadioGroup";
 import { Checkbox } from "./Checkbox";
 import { Input } from "./Input";
-import { textFontSize } from "../../globals.const";
+import { textFontSize } from "../../../globals.const";
 
 const styles = StyleSheet.create({
   componentWrapper: { flexDirection: "column" },

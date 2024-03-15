@@ -7,8 +7,8 @@ import {
   View,
   Text,
 } from "@react-pdf/renderer";
-import { labelFontSize, textFontSize } from "../../globals.const";
 import { Input } from "./Input";
+import { labelFontSize } from "../../../globals.const";
 
 const styles = StyleSheet.create({
   page: {

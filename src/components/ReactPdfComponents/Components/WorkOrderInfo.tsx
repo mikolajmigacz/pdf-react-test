@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
-import { labelFontSize, textFontSize } from "../../globals.const";
+import { labelFontSize, textFontSize } from "../../../globals.const";
 
 function lightenColor(hex: string, percent: number): string {
   percent = Math.min(100, Math.max(0, percent));

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "@react-pdf/renderer";
-import { textFontSize } from "../../globals.const";
 import { Input } from "./Input";
+import { textFontSize } from "../../../globals.const";
 
 const styles = StyleSheet.create({
   container: { flexDirection: "row", alignItems: "center", marginBottom: 10 },
