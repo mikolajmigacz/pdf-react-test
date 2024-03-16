@@ -35,7 +35,6 @@ import { labelFontSize } from "../../globals.const";
 import { dummyData } from "../../utils/componentsConst/Attachments";
 import { dummyStatusCommentData } from "../../utils/componentsConst/StatusComment";
 import { mockData } from "../../utils/componentsConst/EmployeePicker";
-import { cameraMockData } from "../../utils/componentsConst/Camera";
 
 export interface ColumnResourceProps {
   data: LayoutElement;
@@ -45,19 +44,12 @@ export const ColumnResource: React.FC<ColumnResourceProps> = React.memo(
   (props) => {
     const { data } = props;
 
-    console.log("data", data);
     const resourceProcessData = processData.variablesList.find(
       (variable) => variable.name === data.id
     );
     const resourceProcessData_meta = processData.variablesList.find(
       (variable) => variable.name === data.id + "_meta"
     );
-    if (resourceProcessData) {
-      console.log("resourceProcessData", resourceProcessData);
-    }
-    if (resourceProcessData_meta) {
-      console.log("resourceProcessData_meta", resourceProcessData_meta);
-    }
 
     switch (data.type) {
       case "Input":
@@ -235,8 +227,9 @@ export const ColumnResource: React.FC<ColumnResourceProps> = React.memo(
           />
         );
       case "Camera":
-        //error when parsing data, that why there is a mock.
-        return <Camera label={data.meta.label} data={cameraMockData} />;
+        if (!resourceProcessData) return <View></View>;
+        const cameraData = JSON.parse(resourceProcessData?.value || "");
+        return <Camera label={data.meta.label} data={cameraData.value} />;
       case "FilesAndForms":
       case "SpareParts":
       case "AssetPicker":
@@ -252,7 +245,7 @@ export const ColumnResource: React.FC<ColumnResourceProps> = React.memo(
       case "EmployeesLoginHistory":
       case "EmployeesLogin":
       case "ActivityPicker":
-        return <Text>component not availavle</Text>;
+        return <View></View>;
       default:
         return <Text>component not availavle</Text>;
     }
