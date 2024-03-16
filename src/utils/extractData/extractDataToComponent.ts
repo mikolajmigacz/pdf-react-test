@@ -1,41 +1,44 @@
-export const ExtractInputData = (
-  meta: any,
-  processDataValue?: string
-): { value: string; label: string } => {
-  let defaultValue = meta.default.value;
-  if (processDataValue) {
-    defaultValue = processDataValue;
-  }
-  return { value: defaultValue, label: meta.label };
-};
+import React from "react";
+import {
+  InputMetaData,
+  Meta,
+  ExtractedData,
+  LinearGaugeMeta,
+  TableMeta,
+  Option,
+  Output,
+} from "./types";
 
-export const ExtractCheckboxData = (
-  meta: any,
-  processDataValue?: string
-): { label: string; options: { checked: boolean; label: any }[] } => {
-  const options: { checked: boolean; label: any }[] = [];
-  meta.options.values.forEach((element: any) => {
-    options.push({
-      checked: element.value === meta.default.value ? true : false,
-      label: element.label ? element.label : element.value,
-    });
-  });
+const extractDefaultValue = (meta: Meta, processDataValue?: string) =>
+  processDataValue ?? meta.default.value;
+const extractLabelValue = (meta: Meta, processDataValue?: string) => ({
+  label: meta.label,
+  value: extractDefaultValue(meta, processDataValue),
+});
 
-  return { label: meta.label, options };
-};
-
-export const ExtractSelectData = (
-  meta: any,
+export const extractInputData = (
+  meta: Meta,
   processDataValue?: string
-): { value: string; label: string } => {
-  let defaultValue = meta.default.value;
-  if (processDataValue) {
-    defaultValue = processDataValue;
-  }
-  if (!defaultValue) {
-    defaultValue = meta.placeholder;
-  }
-  return { value: defaultValue, label: meta.label };
+): ExtractedData => extractLabelValue(meta, processDataValue);
+
+export const extractCheckboxData = (
+  meta: Meta,
+  processDataValue?: string
+): ExtractedData => ({
+  label: meta.label,
+  options: meta.options?.values.map((element: Option) => ({
+    checked: element.value === extractDefaultValue(meta, processDataValue),
+    label: element.label || element.value,
+  })),
+});
+
+export const extractSelectData = (
+  meta: Meta,
+  processDataValue?: string
+): ExtractedData => {
+  const value =
+    processDataValue || meta.default.value || meta.placeholder || "";
+  return { label: meta.label, value };
 };
 
 export const convertToTimePicker = (dateTimeString: string): string => {
@@ -58,81 +61,16 @@ export const convertToDatePicker = (dateTimeString: string): string => {
     .padStart(2, "0")}/${year}`;
 };
 
-export const ExtractRadioData = (
-  meta: any,
-  processDataValue?: string
-): { label: string; options: { checked: boolean; label: any }[] } => {
-  const options: { checked: boolean; label: any }[] = [];
+export const extractRadioData = extractCheckboxData;
 
-  if (processDataValue) {
-    meta.default.value = processDataValue;
-  }
-  meta.options.values.forEach((element: any) => {
-    options.push({
-      checked: element.value === meta.default.value ? true : false,
-      label: element.label ? element.label : element.value,
-    });
-  });
+export const extractChoiceSelectorData = extractLabelValue;
 
-  return { label: meta.label, options };
-};
+export const prepareLinearGaugeData = (meta: LinearGaugeMeta) => ({
+  ...meta,
+  currentValue: meta.default.value,
+});
 
-export const ExtractChoiceSelectorData = (
-  meta: any,
-  processDataValue?: string
-): { label: string; selectedValue: string } => {
-  const selectedValue = processDataValue
-    ? processDataValue
-    : meta.default.value;
-
-  return { label: meta.label, selectedValue };
-};
-
-export const prepareLinearGaugeData = (meta: any) => {
-  const {
-    max: maxValue,
-    min: minValue,
-    label,
-    ranges,
-    target,
-    default: { value: currentValue },
-    unit,
-    showTresholds,
-  } = meta;
-
-  return {
-    label,
-    unit,
-    minValue,
-    target,
-    maxValue,
-    currentValue,
-    showMinMax: meta.showMinMax,
-    ranges,
-    showTresholds,
-  };
-};
-
-type InputMetaData = {
-  customValidationError: boolean;
-  globalSignedBy: null;
-  tasks: Array<{
-    id: number;
-    subtasks: Array<{
-      id: number;
-      result: string;
-      comment?: string;
-      optionalCheckboxChecked?: boolean;
-    }>;
-  }>;
-};
-
-type Output = Record<
-  number,
-  { result: string; optionalCheckboxChecked: boolean; comment: string }
->;
-
-export const transformSelectedEvents = (
+export const extractChecklistData = (
   input: InputMetaData | undefined
 ): Output | {} => {
   if (!input) {
@@ -154,57 +92,9 @@ export const transformSelectedEvents = (
   return output;
 };
 
-type MetaType = {
-  rows: {
-    canAddRows: boolean;
-    rowsNumber: number;
-    showRowNumber: boolean;
-    showCellNumbers: boolean;
-    highlightRowOnAutofill: boolean;
-  };
-  label: string;
-  columns: Array<{
-    id: string;
-    name: string;
-    label: string;
-    cellType: string;
-  }>;
-  autofill: {
-    url: string;
-    enabled: boolean;
-    polling: boolean;
-    dependencies: Array<any>;
-  };
-  tableMode: string;
-  showHeader: boolean;
-  controlType: string;
-};
-
-export const extractTableData = (meta: MetaType, value: string) => {
-  if (!value) {
-    return {
-      label: meta.label,
-      columns: meta.columns.map((col) => ({
-        key: col.id,
-        label: col.label,
-      })),
-      data: [],
-      showHeader: true,
-      showCellNumbers: false,
-      showRowNumber: false,
-    };
-  }
-  const columns = meta.columns.map((col) => ({
-    key: col.name,
-    label: col.label,
-  }));
-  const data = JSON.parse(value).map((record: any) =>
-    columns.reduce((acc: any, col) => {
-      acc[col.key] = record[col.key].value;
-      return acc;
-    }, {})
-  );
-
+export const extractTableData = (meta: TableMeta, value: string): any => {
+  const data = value ? JSON.parse(value) : [];
+  const columns = meta.columns.map(({ id, label }) => ({ key: id, label }));
   return {
     label: meta.label,
     columns,

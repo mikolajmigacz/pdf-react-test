@@ -61,3 +61,43 @@ export type TableMeta = {
   };
   showHeader: boolean;
 };
+
+export type MetaType = {
+  rows: {
+    canAddRows: boolean;
+    rowsNumber: number;
+    showRowNumber: boolean;
+    showCellNumbers: boolean;
+    highlightRowOnAutofill: boolean;
+  };
+  label: string;
+  columns: Array<{
+    id: string;
+    name: string;
+    label: string;
+    cellType: string;
+  }>;
+  autofill: {
+    url: string;
+    enabled: boolean;
+    polling: boolean;
+    dependencies: Array<any>;
+  };
+  tableMode: string;
+  showHeader: boolean;
+  controlType: string;
+};
+
+export type InputMetaCheckboxData = {
+  customValidationError: boolean;
+  globalSignedBy: null;
+  tasks: Array<{
+    id: number;
+    subtasks: Array<{
+      id: number;
+      result: string;
+      comment?: string;
+      optionalCheckboxChecked?: boolean;
+    }>;
+  }>;
+};

@@ -5,16 +5,16 @@ import { ReactPDFMarkdown } from "../../utils/ReactPDFMarkdown";
 
 import { processData } from "../../utils/paperless-data/paperless-process";
 import {
-  ExtractCheckboxData,
-  ExtractChoiceSelectorData,
-  ExtractInputData,
-  ExtractRadioData,
-  ExtractSelectData,
   convertToDatePicker,
   convertToTimePicker,
+  extractCheckboxData,
+  extractChecklistData,
+  extractChoiceSelectorData,
+  extractInputData,
+  extractRadioData,
+  extractSelectData,
   extractTableData,
   prepareLinearGaugeData,
-  transformSelectedEvents,
 } from "../../utils/extractData/extractDataToComponent";
 import {
   ActionButtons,
@@ -55,70 +55,78 @@ export const ColumnResource: React.FC<ColumnResourceProps> = React.memo(
       case "Input":
       case "InputNumber":
       case "TextArea":
-        const { label, value } = ExtractInputData(
+        const { label, value } = extractInputData(
           data.meta,
           resourceProcessData?.value
         );
-        return <Input label={label} value={value} key={data.id} />;
+        return <Input label={label} value={value || ""} key={data.id} />;
       case "TimePicker":
         const { label: timePickerLabel, value: timePickerValue } =
-          ExtractInputData(data.meta, resourceProcessData?.value);
+          extractInputData(data.meta, resourceProcessData?.value);
         return (
           <Input
             label={timePickerLabel}
-            value={convertToTimePicker(timePickerValue)}
+            value={convertToTimePicker(timePickerValue || "")}
             key={data.id}
           />
         );
       case "Select":
-        const { label: selectLabel, value: selectValue } = ExtractSelectData(
+        const { label: selectLabel, value: selectValue } = extractSelectData(
           data.meta,
           resourceProcessData?.value
         );
-        return <Input label={selectLabel} value={selectValue} key={data.id} />;
+        return (
+          <Input label={selectLabel} value={selectValue || ""} key={data.id} />
+        );
       case "DatePicker":
         const { label: datePickerLabel, value: datePickerValue } =
-          ExtractInputData(data.meta, resourceProcessData?.value);
+          extractInputData(data.meta, resourceProcessData?.value);
         return (
           <Input
             label={datePickerLabel}
-            value={convertToDatePicker(datePickerValue)}
+            value={convertToDatePicker(datePickerValue || "")}
             key={data.id}
           />
         );
       case "Label":
       case "Title":
-        const { label: labelLabel, value: labelValue } = ExtractInputData(
-          data.meta,
-          resourceProcessData?.value
-        );
-        return <Label label={labelLabel} text={labelValue} key={data.id} />;
-      case "Checkbox":
-        const { label: checkboxLabel, options } = ExtractCheckboxData(
+        const { label: labelLabel, value: labelValue } = extractInputData(
           data.meta,
           resourceProcessData?.value
         );
         return (
-          <BasicRadioGroup key={data.id} data={options} label={checkboxLabel} />
+          <Label label={labelLabel} text={labelValue || ""} key={data.id} />
+        );
+      case "Checkbox":
+        const { label: checkboxLabel, options } = extractCheckboxData(
+          data.meta,
+          resourceProcessData?.value
+        );
+        return (
+          <BasicRadioGroup
+            key={data.id}
+            data={options || []}
+            label={checkboxLabel}
+          />
         );
       case "Radio":
       case "GroupButton":
-        const { label: radioLabel, options: radioOptions } = ExtractRadioData(
+        const { label: radioLabel, options: radioOptions } = extractRadioData(
           data.meta,
           resourceProcessData?.value
         );
         return (
           <BasicRadioGroup
             label={radioLabel}
-            data={radioOptions}
+            data={radioOptions || []}
             vertical={false}
             key={data.id}
           />
         );
 
       case "ChoiceSelector":
-        const { label: choiceSelectorLabel, selectedValue } =
-          ExtractChoiceSelectorData(data.meta, resourceProcessData?.value);
+        const { label: choiceSelectorLabel, value: selectedValue } =
+          extractChoiceSelectorData(data.meta, resourceProcessData?.value);
         return (
           <ChoiceSelector
             label={choiceSelectorLabel}
@@ -159,8 +167,8 @@ export const ColumnResource: React.FC<ColumnResourceProps> = React.memo(
           currentValue,
           unit,
           label: linearLabel,
-          maxValue,
-          minValue,
+          max,
+          min,
           ranges,
           showMinMax,
           showTresholds,
@@ -172,8 +180,8 @@ export const ColumnResource: React.FC<ColumnResourceProps> = React.memo(
             label={linearLabel}
             unit={unit}
             currentValue={currentValue}
-            minValue={minValue}
-            maxValue={maxValue}
+            minValue={min}
+            maxValue={max}
             ranges={ranges}
             showMinMax={showMinMax}
             showTresholds={showTresholds}
@@ -183,7 +191,7 @@ export const ColumnResource: React.FC<ColumnResourceProps> = React.memo(
       case "Markdown":
         return <ReactPDFMarkdown data={data.meta.default.value.en} />;
       case "Checklist":
-        const selectedValues = transformSelectedEvents(
+        const selectedValues = extractChecklistData(
           JSON.parse(resourceProcessData?.value || "")
         );
         return (
