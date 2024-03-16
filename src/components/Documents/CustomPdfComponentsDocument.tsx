@@ -21,24 +21,26 @@ import {
   Table,
   TaskList,
   WorkOrderInfo,
-  basicRadioButtonsDataMock,
-  dummyData,
-  dummyStatusCommentData,
-  mockButtonNames,
-  mockComments,
-  mockData,
-  mockInputData,
-  mockLabel,
-  mockProps,
-  mockUsers,
 } from "../ReactPdfComponents/Components";
 import {
   EmployeesLoginHistorycolumns,
   EmployeesLoginHistorydata,
   GeneratedWorkOrdersColumns,
   GeneratedWorkOrdersData,
-} from "../ReactPdfComponents/Components/Table/Table.data";
+} from "../../utils/componentsConst/Table.data";
 import { Row } from "../ReactPdfComponents/Row/Row";
+import { mockUsers } from "../../utils/componentsConst/EmployeeLogin";
+import { mockData } from "../../utils/componentsConst/EmployeePicker";
+import { mockComments } from "../../utils/componentsConst/CommentsThread";
+import { mockProps } from "../../utils/componentsConst/WorkOrderInfo";
+import {
+  mockButtonNames,
+  mockLabel,
+} from "../../utils/componentsConst/ActionButtons";
+import { mockInputData } from "../../utils/componentsConst/SpareParts";
+import { dummyStatusCommentData } from "../../utils/componentsConst/StatusComment";
+import { dummyData } from "../../utils/componentsConst/Attachments";
+import { basicRadioButtonsDataMock } from "../../utils/componentsConst/BasicRadioGroup";
 
 Font.register({
   family: "Roboto",

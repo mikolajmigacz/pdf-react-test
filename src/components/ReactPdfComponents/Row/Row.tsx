@@ -1,17 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet } from "@react-pdf/renderer";
 import { RowTypeList } from "../../../utils/types";
-import {
-  Checkbox,
-  LinearGauge,
-  RadioGroup,
-  Table,
-  dataRadioGroup,
-} from "../Components";
+import { Checkbox, LinearGauge, RadioGroup, Table } from "../Components";
 import {
   EmployeesLoginHistorycolumns,
   EmployeesLoginHistorydata,
-} from "../Components/Table/Table.data";
+} from "../../../utils/componentsConst/Table.data";
+import { dataRadioGroup } from "../../../utils/componentsConst/RadioGroup";
 
 const marginsStyle: {
   marginVertical: number;

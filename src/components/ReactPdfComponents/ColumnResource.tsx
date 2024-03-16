@@ -30,12 +30,12 @@ import {
   LinearGauge,
   StatusComment,
   Table,
-  cameraMockData,
-  dummyData,
-  dummyStatusCommentData,
-  mockData,
 } from "./Components";
 import { labelFontSize } from "../../globals.const";
+import { dummyData } from "../../utils/componentsConst/Attachments";
+import { dummyStatusCommentData } from "../../utils/componentsConst/StatusComment";
+import { mockData } from "../../utils/componentsConst/EmployeePicker";
+import { cameraMockData } from "../../utils/componentsConst/Camera";
 
 export interface ColumnResourceProps {
   data: LayoutElement;
@@ -189,7 +189,7 @@ export const ColumnResource: React.FC<ColumnResourceProps> = React.memo(
           />
         );
       case "Markdown":
-        return <ReactPDFMarkdown data={"# SIEMANKO ## SIEMANKO MNIEJSZE"} />;
+        return <ReactPDFMarkdown data={data.meta.default.value.en} />;
       case "Checklist":
         const selectedValues = transformSelectedEvents(
           JSON.parse(resourceProcessData?.value || "")
@@ -252,9 +252,9 @@ export const ColumnResource: React.FC<ColumnResourceProps> = React.memo(
       case "EmployeesLoginHistory":
       case "EmployeesLogin":
       case "ActivityPicker":
-        return <Text>no pdf component</Text>;
+        return <Text>component not availavle</Text>;
       default:
-        return <Attachments data={dummyData} />;
+        return <Text>component not availavle</Text>;
     }
   }
 );

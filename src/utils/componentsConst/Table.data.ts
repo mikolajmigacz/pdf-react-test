@@ -1,5 +1,3 @@
-import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
-
 export const data = [
   { id: 1, name: "John Doe", age: 28, job: "Engineer" },
   { id: 2, name: "Jane Doe", age: 32, job: "Designer" },

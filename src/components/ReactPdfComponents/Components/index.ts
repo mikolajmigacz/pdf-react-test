@@ -1,4 +1,4 @@
-export * from "./Table/Table";
+export * from "./Table";
 export * from "./ActionButtons";
 export * from "./Attachments";
 export * from "./BasicRadioGroup";
