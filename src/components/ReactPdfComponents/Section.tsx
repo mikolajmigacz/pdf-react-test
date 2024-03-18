@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     borderStyle: "dotted",
     borderWidth: "1px",
-    marginVertical: 5,
   },
 });
 

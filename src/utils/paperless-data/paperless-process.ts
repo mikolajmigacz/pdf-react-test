@@ -28,7 +28,8 @@ export const processData = {
     {
       name: "knqK0y__yX2RRRpriFsJ4",
       type: "string",
-      value: '{"files":[]}',
+      value:
+        '{"files":[{"locationType":"external","name":"https://www.facebook.com","path":"","status":"unknown","uid":"KzoFqUOfa0PLP-LAxR60O","url":"https://www.facebook.com"},{"locationType":"external","name":"https://instagram.com","path":"","status":"unknown","uid":"BV2DFawa6kVy3IXqmBfXE","url":"https://instagram.com"}]}',
       scope: "local",
     },
     {

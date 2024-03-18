@@ -101,3 +101,10 @@ export type InputMetaCheckboxData = {
     }>;
   }>;
 };
+
+export type AttachmentsFiles = {
+  name: string;
+  path: string;
+  status: string;
+  url: string;
+};

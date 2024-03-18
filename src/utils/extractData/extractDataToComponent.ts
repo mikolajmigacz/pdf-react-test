@@ -7,6 +7,7 @@ import {
   TableMeta,
   Option,
   Output,
+  AttachmentsFiles,
 } from "./types";
 
 const extractDefaultValue = (meta: Meta, processDataValue?: string) =>
@@ -92,9 +93,31 @@ export const extractChecklistData = (
   return output;
 };
 
-export const extractTableData = (meta: TableMeta, value: string): any => {
-  const data = value ? JSON.parse(value) : [];
-  const columns = meta.columns.map(({ id, label }) => ({ key: id, label }));
+export const extractTableData = (meta: TableMeta, value: string) => {
+  if (!value) {
+    return {
+      label: meta.label,
+      columns: meta.columns.map((col) => ({
+        key: col.id,
+        label: col.label,
+      })),
+      data: [],
+      showHeader: true,
+      showCellNumbers: false,
+      showRowNumber: false,
+    };
+  }
+  const columns = meta.columns.map((col) => ({
+    key: col.name,
+    label: col.label,
+  }));
+  const data = JSON.parse(value).map((record: any) =>
+    columns.reduce((acc: any, col) => {
+      acc[col.key] = record[col.key].value;
+      return acc;
+    }, {})
+  );
+
   return {
     label: meta.label,
     columns,
@@ -103,4 +126,13 @@ export const extractTableData = (meta: TableMeta, value: string): any => {
     showCellNumbers: meta.rows.showCellNumbers,
     showRowNumber: meta.rows.showRowNumber,
   };
+};
+export const extractAttachmentsData = (files: Array<AttachmentsFiles>): any => {
+  const data = files.map((file) => ({
+    name: file.name,
+    path: file.path,
+    type: "File",
+    status: file.status,
+  }));
+  return data;
 };

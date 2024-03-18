@@ -19,13 +19,15 @@ const styles = StyleSheet.create({
 
 export const Column: React.FC<ColumnProps> = React.memo((props) => {
   const component = (
-    <>
+    <View>
       {props.data
         ? props.data.map((value, index) => (
-            <ColumnResource key={value.id} data={value} />
+            <View style={{ marginVertical: 5 }}>
+              <ColumnResource key={value.id} data={value} />
+            </View>
           ))
         : []}
-    </>
+    </View>
   );
 
   return (

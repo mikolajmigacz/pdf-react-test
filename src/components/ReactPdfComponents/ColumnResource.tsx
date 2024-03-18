@@ -7,6 +7,7 @@ import { processData } from "../../utils/paperless-data/paperless-process";
 import {
   convertToDatePicker,
   convertToTimePicker,
+  extractAttachmentsData,
   extractCheckboxData,
   extractChecklistData,
   extractChoiceSelectorData,
@@ -143,7 +144,6 @@ export const ColumnResource: React.FC<ColumnResourceProps> = React.memo(
           </View>
         );
       case "Table":
-        console.log(data.meta, resourceProcessData?.value);
         const {
           columns: tableColumns,
           data: tableData,
@@ -203,7 +203,11 @@ export const ColumnResource: React.FC<ColumnResourceProps> = React.memo(
         );
 
       case "Attachments":
-        return <Attachments data={dummyData} />;
+        if (!resourceProcessData) return <View></View>;
+        const attachmentData = extractAttachmentsData(
+          JSON.parse(resourceProcessData.value).files
+        );
+        return <Attachments label={data.meta.label} data={attachmentData} />;
       case "Inspection":
         return (
           <Inspection

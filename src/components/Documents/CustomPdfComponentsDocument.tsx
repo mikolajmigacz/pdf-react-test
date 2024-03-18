@@ -111,7 +111,7 @@ export const CustomPdfComponentsDocument = () => {
           avatarSrc={dummyStatusCommentData.avatarSrc}
           comment={dummyStatusCommentData.comment}
         />
-        <Attachments data={dummyData} />
+        {/* <Attachments data={dummyData} /> */}
         <Table
           label="test"
           data={EmployeesLoginHistorydata}
