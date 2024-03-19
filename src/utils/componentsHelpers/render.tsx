@@ -1,89 +1,92 @@
-import { Key } from "react";
-import { Input } from "../../components/ReactPdfComponents/Components/Input";
-import {
-  convertToDatePicker,
-  convertToTimePicker,
-  extractCheckboxData,
-  extractChoiceSelectorData,
-  extractInputData,
-  extractRadioData,
-  extractSelectData,
-} from "../extractData/extractDataToComponent";
-import { Meta } from "../extractData/types";
-import {
-  BasicRadioGroup,
-  ChoiceSelector,
-  Label,
-} from "../../components/ReactPdfComponents/Components";
+import { extractData } from "../extractData/extractDataToComponent";
+import { processData } from "../paperless-data/paperless-process";
 
-export const renderInputBasedComponents = (
-  data: { type: any; id: Key | null | undefined },
-  value: any,
-  meta: any
-) => {
-  const { label, value: extractedValue } = extractInputData(meta, value);
-  switch (data.type) {
-    case "TimePicker":
-      return (
-        <Input
-          label={label}
-          value={convertToTimePicker(extractedValue || "")}
-          key={data.id}
-        />
-      );
-    case "DatePicker":
-      return (
-        <Input
-          label={label}
-          value={convertToDatePicker(extractedValue || "")}
-          key={data.id}
-        />
-      );
-    default:
-      return <Input label={label} value={extractedValue || ""} key={data.id} />;
-  }
+export const componentMap = {
+  Input: [
+    "Input",
+    "InputNumber",
+    "TextArea",
+    "TimePicker",
+    "Select",
+    "DatePicker",
+  ],
+  Label: ["Label", "Title"],
+  BasicRadioGroup: ["Checkbox", "Radio", "GroupButton"],
+  ChoiceSelector: ["ChoiceSelector"],
+  Photo: ["Photo", "Image"],
+  Table: ["Table"],
+  LinearGauge: ["LinearGauge"],
+  Markdown: ["Markdown"],
+  Checklist: ["Checklist"],
+  Attachments: ["Attachments"],
+  Inspection: ["Inspection"],
+  StatusComment: ["StatusComment"],
+  ActionButtons: ["LoginButtonControl"],
+  EmployeePicker: ["EmployeePicker"],
+  Camera: ["Camera"],
+  Default: [
+    "FilesAndForms",
+    "SpareParts",
+    "AssetPicker",
+    "CostControl",
+    "Periodicity",
+    "StatusHistory",
+    "ActionButtons",
+    "TaskList",
+    "WorkOrderInfo",
+    "GeneratedWorkOrders",
+    "CommentsThread",
+    "RelatedOrders",
+    "EmployeesLoginHistory",
+    "EmployeesLogin",
+    "ActivityPicker",
+  ],
 };
 
-export const renderSelectComponent = (
-  data: { id: Key | null | undefined },
-  value: any,
-  meta: any
-) => {
-  const { label, value: selectValue } = extractSelectData(meta, value);
-  return <Input label={label} value={selectValue || ""} key={data.id} />;
-};
+export const PDFSupportedComponents = [
+  "Input",
+  "InputNumber",
+  "TextArea",
+  "TimePicker",
+  "Select",
+  "DatePicker",
+  "Label",
+  "Title",
+  "Checkbox",
+  "Radio",
+  "GroupButton",
+  "ChoiceSelector",
+  "Photo",
+  "Image",
+  "Table",
+  "LinearGauge",
+  "Markdown",
+  "Checklist",
+  "Attachments",
+  "Inspection",
+  "StatusComment",
+  "LoginButtonControl",
+  "EmployeePicker",
+  "Camera",
+];
 
-export const renderLabelComponent = (
-  data: { id: any },
-  value: string | undefined,
-  meta: Meta
-) => {
-  const { label, value: text } = extractInputData(meta, value);
-  return <Label label={label} text={text || ""} key={data.id} />;
-};
-
-export const renderRadioGroupComponent = (
-  data: { type: string; id: any },
-  value: any,
-  meta: any
-) => {
-  const { label, options } =
-    data.type === "Checkbox"
-      ? extractCheckboxData(meta, value)
-      : extractRadioData(meta, value);
-  return <BasicRadioGroup label={label} data={options || []} key={data.id} />;
-};
-
-export const renderChoiceSelectorComponent = (
-  data: { id: any },
-  value: any,
-  meta: any
-) => {
-  const { label, value: selectedValue } = extractChoiceSelectorData(
-    meta,
-    value
+export const getComponentData = (data: any) => {
+  const resource = processData.variablesList.find(
+    (variable) => variable.name === data.id
   );
-  return (
-    <ChoiceSelector label={label} checkedValue={selectedValue} key={data.id} />
+  const resourceMeta = processData.variablesList.find(
+    (variable) => variable.name === data.id + "_meta"
   );
+  const { ...props } = extractData[data.type as keyof typeof extractData](
+    data.meta,
+    resource,
+    resourceMeta
+  );
+  return { ...props };
 };
+
+export const renderComponent = (
+  id: string,
+  Component: any,
+  componentProps: any
+) => <Component {...componentProps} key={id} />;

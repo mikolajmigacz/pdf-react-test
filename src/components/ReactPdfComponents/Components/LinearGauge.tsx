@@ -2,6 +2,30 @@ import React from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
 import { labelFontSize } from "../../../globals.const";
 
+type Range = [
+  number,
+  number,
+  "success" | "warning" | "error",
+  boolean,
+  boolean
+];
+
+interface RangeLabelAndColorReturn {
+  color: string;
+}
+
+interface LinearGaugeProps {
+  label: string;
+  unit: string;
+  min: number;
+  default: { value: number };
+  target: number;
+  max: number;
+  showMinMax?: boolean;
+  ranges?: Range[];
+  showTresholds?: boolean;
+}
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
@@ -58,7 +82,10 @@ const styles = StyleSheet.create({
     top: 3,
   },
 });
-const getRangeLabelAndColor = (currentValue: number, ranges: any) => {
+const getRangeLabelAndColor = (
+  currentValue: number,
+  ranges: Range[]
+): RangeLabelAndColorReturn => {
   for (let [min, max, label, leftOpened, rightOpened] of ranges) {
     const isInLeftBound = leftOpened ? currentValue > min : currentValue >= min;
     const isInRightBound = rightOpened
@@ -86,30 +113,30 @@ const getRangeLabelAndColor = (currentValue: number, ranges: any) => {
   return { color: "grey" };
 };
 
-export const LinearGauge = ({
+export const LinearGauge: React.FC<LinearGaugeProps> = ({
   label,
   unit,
-  minValue,
-  currentValue,
+  min,
+  default: { value: currentValue },
   target,
-  maxValue,
+  max,
   showMinMax = true,
   ranges = [],
   showTresholds,
 }: {
   label: string;
   unit: string;
-  minValue: number;
-  currentValue: number;
+  min: number;
+  default: { value: number };
   target: number;
-  maxValue: number;
+  max: number;
   showMinMax?: boolean;
-  ranges?: number[];
+  ranges?: Range[];
   showTresholds?: boolean;
 }) => {
-  const filledPercentage = (currentValue / maxValue) * 100;
+  const filledPercentage = (currentValue / max) * 100;
   const filledWidth = `${filledPercentage}%`;
-  const targetPosition = (target / maxValue) * 100;
+  const targetPosition = (target / max) * 100;
 
   const { color } = getRangeLabelAndColor(currentValue, ranges);
 
@@ -118,7 +145,7 @@ export const LinearGauge = ({
       <Text style={{ fontSize: labelFontSize }}>{label + ":"}</Text>
       <View style={styles.gaugeContainer}>
         {showMinMax && (
-          <Text style={styles.minValueText}>{`${minValue} ${unit}`}</Text>
+          <Text style={styles.minValueText}>{`${min} ${unit}`}</Text>
         )}
         <View style={styles.gaugeBarContainer}>
           <View
@@ -129,8 +156,8 @@ export const LinearGauge = ({
           />
           {showTresholds &&
             ranges.map((range: any, index: number) => {
-              if (range[1] === maxValue) return null;
-              const position = (range[1] / maxValue) * 100;
+              if (range[1] === max) return null;
+              const position = (range[1] / max) * 100;
               return (
                 <>
                   <View
@@ -165,7 +192,7 @@ export const LinearGauge = ({
           </Text>
         </View>
         {showMinMax && (
-          <Text style={styles.maxValueText}>{`${maxValue} ${unit}`}</Text>
+          <Text style={styles.maxValueText}>{`${max} ${unit}`}</Text>
         )}
       </View>
     </View>

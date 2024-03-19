@@ -1,6 +1,22 @@
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
 import { labelFontSize, textFontSize } from "../../../globals.const";
 
+interface Column {
+  key: string;
+  label: string;
+}
+
+type DataItem = Record<string, any>;
+
+interface TableProps {
+  label: string;
+  columns: Column[];
+  data: DataItem[];
+  showCellNumbers?: boolean;
+  showRowNumbers?: boolean;
+  showHeader?: boolean;
+}
+
 const styles = StyleSheet.create({
   table: {
     display: "flex",
@@ -28,20 +44,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Table = ({
+export const Table: React.FC<TableProps> = ({
   label,
   columns,
   data,
   showCellNumbers = false,
   showRowNumbers = true,
   showHeader = true,
-}: {
-  label: string;
-  columns: any;
-  data: any;
-  showCellNumbers?: boolean;
-  showRowNumbers?: boolean;
-  showHeader?: boolean;
 }) => {
   const adjustedColumns = showRowNumbers
     ? [{ key: "rowNumber", label: "#" }, ...columns]

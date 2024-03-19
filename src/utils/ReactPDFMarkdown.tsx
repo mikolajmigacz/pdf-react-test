@@ -6,8 +6,11 @@ import { ServerStyleSheet } from "styled-components";
 import { StyledMarkdown } from "../components/Markdown/MarkdownPreview.styles";
 import { colorSyntaxPlugin } from "../components/Markdown/MarkdownPreview.utils";
 import { Html } from "react-pdf-html";
+import { View, Text } from "@react-pdf/renderer";
+import { labelFontSize } from "../globals.const";
 
 export interface ReactPDFMarkdownProps {
+  label: string;
   data: string;
 }
 
@@ -20,14 +23,14 @@ function removePseudoClasses(styleTags: string) {
   return cleanedStyles;
 }
 
-export const ReactPDFMarkdown: React.FC<ReactPDFMarkdownProps> = (props) => {
+export const Markdown: React.FC<ReactPDFMarkdownProps> = ({ label, data }) => {
   const sheet = new ServerStyleSheet();
 
   const html = ReactDOMServer.renderToString(
     sheet.collectStyles(
       <StyledMarkdown>
         <ReactMarkdown remarkPlugins={[remarkGfm, colorSyntaxPlugin]}>
-          {props.data}
+          {data}
         </ReactMarkdown>
       </StyledMarkdown>
     )
@@ -39,5 +42,10 @@ export const ReactPDFMarkdown: React.FC<ReactPDFMarkdownProps> = (props) => {
     ${html}
     </body>`;
 
-  return <Html>{MarkdownHTML}</Html>;
+  return (
+    <View style={{ flexDirection: "column", gap: 2 }}>
+      <Text style={{ fontSize: labelFontSize }}>{label + ":"}</Text>
+      <Html>{MarkdownHTML}</Html>
+    </View>
+  );
 };

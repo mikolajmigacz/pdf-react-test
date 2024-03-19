@@ -1,7 +1,7 @@
 export const mockData = {
   label: "Przypisany",
-  firmaZewnetrzna: { label: "Firma zewnętrzna:", value: "Cegielec" },
-  pracownik: {
+  employer: { label: "Firma zewnętrzna:", value: "Cegielec" },
+  employee: {
     circleColor: "#FF6347",
     value: "Paweł Słabyk",
     label: "Pracownik",

@@ -3,6 +3,41 @@ import { View, Text, StyleSheet } from "@react-pdf/renderer";
 import { Input } from "./Input";
 import { textFontSize } from "../../../globals.const";
 
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface Validator {
+  properties: {
+    options: Option[];
+  };
+}
+
+interface Parameter {
+  id: string;
+  name: string;
+  valueType: "ENUM" | string;
+  validator: Validator;
+}
+
+interface InspectionInput {
+  title: string;
+  parameters: Parameter[];
+}
+
+interface SelectedValue {
+  value: string;
+  inspectionValue: string;
+  comment: string;
+  commentVisible: boolean;
+}
+
+interface InspectionProps {
+  inspectionInput: InspectionInput;
+  selectedValues: Record<string, SelectedValue>;
+}
+
 const styles = StyleSheet.create({
   container: { flexDirection: "row", alignItems: "center", marginBottom: 10 },
   valueContainer: { flexDirection: "row", justifyContent: "space-between" },
@@ -27,21 +62,19 @@ const gradeStyles: Record<string, Object> = {
   C: styles.gradeC,
 };
 
-const getValue = (value: string, param: any) => {
+const getValue = (value: string, param: Parameter) => {
   if (param.valueType === "ENUM") {
-    return (value = param.validator.properties.options.find(
+    const option = param.validator.properties.options.find(
       (option: any) => option.value === value
-    ).label);
+    );
+    return option ? option.label : value;
   }
   return value;
 };
 
-export const Inspection = ({
+export const Inspection: React.FC<InspectionProps> = ({
   inspectionInput,
   selectedValues,
-}: {
-  inspectionInput: any;
-  selectedValues: any;
 }) => (
   <View>
     <Text>{inspectionInput.title}</Text>
@@ -49,7 +82,7 @@ export const Inspection = ({
       const value = getValue(selectedValues[param.name].value, param);
       return (
         <View key={param.id} style={styles.container}>
-          <View style={{ flexDirection: "column" }}>
+          <View wrap={false} style={{ flexDirection: "column" }}>
             <Text style={styles.label}>{`${index + 1}. ${param.name}:`}</Text>
             <View style={styles.valueContainer}>
               <Text style={styles.value}>{value}</Text>

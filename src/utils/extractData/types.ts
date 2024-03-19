@@ -13,7 +13,7 @@ export type Option = {
 export type ExtractedData = {
   value?: string;
   label: string;
-  options?: ExtractedOption[];
+  data?: ExtractedOption[];
 };
 
 export type ExtractedOption = {

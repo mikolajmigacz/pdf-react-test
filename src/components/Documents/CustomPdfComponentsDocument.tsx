@@ -60,11 +60,11 @@ export const CustomPdfComponentsDocument = () => {
         size="A4"
       >
         <EmployeeLogin users={mockUsers} />
-        <EmployeePicker
+        {/* <EmployeePicker
           label={mockData.label}
           employer={mockData.firmaZewnetrzna}
           employee={mockData.pracownik}
-        />
+        /> */}
         <CommentsThread comments={mockComments} />
         <WorkOrderInfo
           description={mockProps.description}

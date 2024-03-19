@@ -52,28 +52,28 @@ const generateRows = (type: RowTypeList) => {
       return (
         <>
           <View style={{ width: "25%", ...styles.column }}>
-            <LinearGauge
+            {/* <LinearGauge
               label="test"
               unit="pt"
               currentValue={150}
               maxValue={300}
               minValue={0}
               target={200}
-            />
+            /> */}
           </View>
           <View style={{ width: "75%", ...styles.column }}>
             <RadioGroup
               options={dataRadioGroup.options}
               selectedValue={dataRadioGroup.selectedValue}
             />
-            <LinearGauge
+            {/* <LinearGauge
               target={200}
               label="test"
               unit="pt"
               currentValue={150}
               maxValue={300}
               minValue={0}
-            />
+            /> */}
           </View>
         </>
       );

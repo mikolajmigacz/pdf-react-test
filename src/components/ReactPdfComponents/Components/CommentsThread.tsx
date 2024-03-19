@@ -2,14 +2,14 @@ import React from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
 import { textFontSize } from "../../../globals.const";
 
-interface Comment {
+interface CommentType {
   author: string;
   timestamp: string;
   text: string;
 }
 
 interface CommentsProps {
-  comments: Array<Comment>;
+  comments: Array<CommentType>;
 }
 
 const styles = StyleSheet.create({
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   text: { fontSize: textFontSize },
 });
 
-const Comment = ({ author, timestamp, text }: Comment) => {
+const Comment = ({ author, timestamp, text }: CommentType) => {
   const initials = author
     .split(" ")
     .map((name) => name[0])

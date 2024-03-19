@@ -7,7 +7,7 @@ import {
   getRadioGroupHTML,
   getTableHTML,
 } from "../../utils/getHTML";
-import { ReactPDFMarkdown } from "../../utils/ReactPDFMarkdown";
+import { Markdown } from "../../utils/ReactPDFMarkdown";
 import { markdownContent } from "../../utils/const";
 import { antdesignStyles } from "../../utils/antd.styles";
 
@@ -19,9 +19,7 @@ export const StyledComponentDocument = () => {
 
   return (
     <Document>
-      <Page size="A4">
-        <ReactPDFMarkdown data="# WITAM" />
-      </Page>
+      <Page size="A4">{/* <Markdown data="# WITAM" /> */}</Page>
     </Document>
   );
 };

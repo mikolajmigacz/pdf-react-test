@@ -22,12 +22,12 @@ const styles = StyleSheet.create({
 });
 
 export const Input = ({
-  label,
-  value,
+  label = "Input",
+  value = "",
   horizontal = false,
 }: {
-  label: string;
-  value: string;
+  label?: string;
+  value?: string;
   horizontal?: boolean;
 }) => (
   <View style={horizontal ? styles.containerHorizontal : styles.container}>

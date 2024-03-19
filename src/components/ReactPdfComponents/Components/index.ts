@@ -21,3 +21,5 @@ export * from "./SpareParts";
 export * from "./StatusComment";
 export * from "./TaskList";
 export * from "./WorkOrderInfo";
+export * from "./Photo";
+export * from "../../../utils/ReactPDFMarkdown";

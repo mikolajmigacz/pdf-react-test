@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
 });
 
 export const Camera = ({ label, data }: { label: string; data: any }) => {
+  if (!data) return <View />;
   return (
     <View style={styles.page}>
       <Text style={{ fontSize: labelFontSize }}>{label + ":"}</Text>

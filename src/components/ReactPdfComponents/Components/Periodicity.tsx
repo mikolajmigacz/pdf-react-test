@@ -1,5 +1,5 @@
 import React from "react";
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import { Text, View, StyleSheet } from "@react-pdf/renderer";
 import { Checkbox } from "./Checkbox";
 import { Radio } from "./Radio";
 import { textFontSize } from "../../../globals.const";

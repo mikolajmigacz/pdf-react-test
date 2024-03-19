@@ -58,14 +58,14 @@ export const Attachments = ({
   <View style={styles.table}>
     <Text style={styles.title}>{label}:</Text>
     <Text style={styles.title}>Files:</Text>
-    <View style={styles.header}>
+    <View wrap={false} style={styles.header}>
       <Text style={[styles.headerCell, styles.nameCell]}>Name</Text>
       <Text style={[styles.headerCell, styles.pathCell]}>Path</Text>
       <Text style={[styles.headerCell, styles.typeCell]}>Type</Text>
       <Text style={[styles.headerCell, styles.statusCell]}>Status</Text>
     </View>
     {data.map((row, i) => (
-      <View style={styles.row} key={i}>
+      <View wrap={false} style={styles.row} key={i}>
         {/* <Image style={[styles.cell, styles.iconCell]} src={"/attachment.jpg"} /> */}
         <Text style={[styles.cell, styles.nameCell]}>{row.name}</Text>
         <Text style={[styles.cell, styles.pathCell]}>{row.path}</Text>
