@@ -38,21 +38,17 @@ export const extractTextAreaData = (
 export const extractCheckboxData = (
   meta: Meta,
   processData?: any
-): ExtractedData => {
-  console.log("meta", meta);
-  console.log("processData", processData);
-  return {
-    label: meta.label,
-    data: meta.options
-      ? meta.options?.values.map((element: Option) => ({
-          checked:
-            element.value ===
-            extractDefaultValue(meta, processData ? processData.value : ""),
-          label: element.label || element.value,
-        }))
-      : [],
-  };
-};
+): ExtractedData => ({
+  label: meta.label,
+  data: meta.options
+    ? meta.options?.values.map((element: Option) => ({
+        checked:
+          element.value ===
+          extractDefaultValue(meta, processData ? processData.value : ""),
+        label: element.label || element.value,
+      }))
+    : [],
+});
 
 export const extractRadioData = (
   meta: Meta,
@@ -103,16 +99,10 @@ export const extractChoiceSelectorData = (meta: Meta, processData?: any) => {
   };
 };
 
-export const prepareLinearGaugeData = (meta: LinearGaugeMeta) => {
-  console.log("prepare men", {
-    ...meta,
-    currentValue: meta.default.value,
-  });
-  return {
-    ...meta,
-    currentValue: meta.default.value,
-  };
-};
+export const prepareLinearGaugeData = (meta: LinearGaugeMeta) => ({
+  ...meta,
+  currentValue: meta.default.value,
+});
 
 export const extractChecklistData = (
   input: InputMetaData | undefined
@@ -220,10 +210,10 @@ export const extractData = {
       label: meta.label,
     };
   },
-  Markdown: (meta: any, value: any) => {
-    console.log(meta.label);
-    return { label: meta.label, data: meta.default.value.en };
-  },
+  Markdown: (meta: any, value: any) => ({
+    label: meta.label,
+    data: meta.default.value.en,
+  }),
   StatusComment: (meta: any, value: any) => {
     return {
       avatarSrc: dummyStatusCommentData.avatarSrc,
